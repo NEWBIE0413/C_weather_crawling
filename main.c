@@ -11,40 +11,40 @@ int webcrawling() {
 	while (1) {
         char answer[1];
         system("cls");
-		printf("³¯¾¾ Á¶È¸ ÇÁ·Î±×·¥¿¡ ¿À½Å°É È¯¿µÇÕ´Ï´Ù !\n1. ¿À´Ã ³¯¾¾ Á¤º¸ ºÒ·¯¿À±â\n2. ÇÁ·Î±×·¥ Á¾·áÇÏ±â\n¿øÇÏ½Ã´Â ÀÛ¾÷ ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä  : ");
+		printf("ë‚ ì”¨ ì¡°íšŒ í”„ë¡œê·¸ë¨ì— ì˜¤ì‹ ê±¸ í™˜ì˜í•©ë‹ˆë‹¤ !\n1. ì˜¤ëŠ˜ ë‚ ì”¨ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°\n2. í”„ë¡œê·¸ë¨ ì¢…ë£Œí•˜ê¸°\nì›í•˜ì‹œëŠ” ì‘ì—… ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”  : ");
 		scanf("%s", &answer);
 		if(strcmp(answer, "1") == 0) {
-			printf("³¯¾¾Á¤º¸¸¦ ºÒ·¯¿É´Ï´Ù."); 
-			popen("curl -o weather.html (³¯¾¾ ÁÖ¼ÒÀÔ·Â)", "r"); //³×ÀÌ¹ö ³¯¾¾¿¡¼­ htmlÆÄÀÏ ´Ù¿î·Îµå 
+			printf("ë‚ ì”¨ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤."); 
+			popen("curl -o weather.html https://weather.naver.com/", "r"); //ë„¤ì´ë²„ ë‚ ì”¨ì—ì„œ htmlíŒŒì¼ ë‹¤ìš´ë¡œë“œ 
 			system("cls");
-			printf("³¯¾¾ Á¤º¸¸¦ ´Ù¿î·ÎµåÁßÀÔ´Ï´Ù.\n\n\n\n\n");
+			printf("ë‚ ì”¨ ì •ë³´ë¥¼ ë‹¤ìš´ë¡œë“œì¤‘ì…ë‹ˆë‹¤.\n\n\n\n\n");
             sleep(3000);
             system("cls");
-			_wsetlocale(LC_ALL, L"Korean"); //UTF-8ÀÎÄÚµùÀ» À§ÇÑ ·ÎÄÉÀÏ ¼³Á¤ 
+			_wsetlocale(LC_ALL, L"Korean"); //UTF-8ì¸ì½”ë”©ì„ ìœ„í•œ ë¡œì¼€ì¼ ì„¤ì • 
 			wchar_t buff[10000];
-			wchar_t* location_string = L"<strong class=\"location_name\">"; //Å©·Ñ¸µÀ» À§ÇÑ html ¿¤¸®¸ÕÆ® 
+			wchar_t* location_string = L"<strong class=\"location_name\">"; //í¬ë¡¤ë§ì„ ìœ„í•œ html ì—˜ë¦¬ë¨¼íŠ¸ 
 			wchar_t* degree_string = L"<span class=\"degree\">";  //2
 			wchar_t* weather_string = L"<span class=\"weather\">";  //3 
 			wchar_t* update_string = L"<span class=\"offer_update\">"; //4
 			FILE *fp = fopen("weather.html", "rt+,ccs=UTF-8"); //5
             if (fp == NULL) {
-               printf("³¯¾¾ÆÄÀÏÀ» ¿­ ¼ö ¾ø½À´Ï´Ù.");
+               printf("ë‚ ì”¨íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                return 1;
             }
 		    int count = 1;
             while (fgetws(buff, 1000, fp)) {
                 if (count == 1000) {
-                   printf("ÀÏÄ¡ÇÏ´Â °á°ú°¡ ¾ø½À´Ï´Ù.");
+                   printf("ì¼ì¹˜í•˜ëŠ” ê²°ê³¼ê°€ ì—†ìŠµë‹ˆë‹¤.");
                    sleep(5000);
                    return 0;
                 } 
-                if (wcsstr(buff, location_string) != 0) { // strstr ¹× strtokÀ» È°¿ëÇÑ Å©·Ñ¸µ ±¸Çö 
+                if (wcsstr(buff, location_string) != 0) { // strstr ë° strtokì„ í™œìš©í•œ í¬ë¡¤ë§ êµ¬í˜„ 
                    char *ptr = wcstok(buff, ">");
                    ptr = wcstok(NULL, ">");
-                   printf("³¯¾¾Á¤º¸ ´Ù¿î¿¡ ¼º°øÇß½À´Ï´Ù.");
+                   printf("ë‚ ì”¨ì •ë³´ ë‹¤ìš´ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤.");
                    wprintf(L"\n",ptr);
                    ptr = wcstok(ptr, "<");
-                   printf("ÇöÀç À§Ä¡ : "); 
+                   printf("í˜„ì¬ ìœ„ì¹˜ : "); 
                    wprintf(L"%ls\n",ptr);
                 }
                 if (wcsstr(buff, degree_string) != 0) {
@@ -54,22 +54,22 @@ int webcrawling() {
                    ptr2 = wcstok(NULL, ">");
                    wprintf(L"",ptr2);
                    ptr2 = wcstok(ptr2, "<");
-                   printf("ÇöÀç ¿Âµµ : "); 
+                   printf("í˜„ì¬ ì˜¨ë„ : "); 
                    wprintf(L"%ls",ptr2);
-                   printf("¡Æ\n");
+                   printf("Â°\n");
                 }
                 if (wcsstr(buff, weather_string) != 0) {
                    char *ptr = wcstok(buff, ">");
                    ptr = wcstok(NULL, ">");
                    wprintf(L"",ptr);
                    ptr = wcstok(ptr, "<");
-                   printf("ÇöÀç ³¯¾¾ : "); 
+                   printf("í˜„ì¬ ë‚ ì”¨ : "); 
                    wprintf(L"%ls\n",ptr);
                 }
                 if (wcsstr(buff, update_string) != 0) {
                    char *ptr = wcstok(buff, ">");
                    int i;
-                   printf("¾÷µ¥ÀÌÆ® ½Ã°£ : ");
+                   printf("ì—…ë°ì´íŠ¸ ì‹œê°„ : ");
                    for(i=0;i<4;i++){
                            if (i!=0){
                               wprintf(L"%ls.",ptr);
@@ -78,24 +78,24 @@ int webcrawling() {
                    }
                    ptr = wcstok(ptr, "<");
                    wprintf(L"%ls\n",ptr);
-                   printf("\n¾Æ¹« Å°³ª ÀÔ·ÂÇÏ¿© Á¾·áÇÏ±â");
+                   printf("\nì•„ë¬´ í‚¤ë‚˜ ì…ë ¥í•˜ì—¬ ì¢…ë£Œí•˜ê¸°");
                 }
 			}
 			free(buff);
-			char *c = _getch(); //Å°ÀÔ·Â 
+			char *c = _getch(); //í‚¤ì…ë ¥ 
 			system("cls");
 			return 0;
 			
 		}
 		if(strcmp(answer, "2") == 0) {
             system("cls");
-			printf("ÇÁ·Î±×·¥ÀÌ Á¾·áµË´Ï´Ù.\n");
+			printf("í”„ë¡œê·¸ë¨ì´ ì¢…ë£Œë©ë‹ˆë‹¤.\n");
 			sleep(3000); 
 			return 0;
 		}
         else {
             system("cls");
-			printf("\nÀß¸øµÈ ´äº¯À» ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n3ÃÊ µÚ ¸ŞÀÎÈ­¸éÀ¸·Î µ¹¾Æ°©´Ï´Ù.");
+			printf("\nì˜ëª»ëœ ë‹µë³€ì„ ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n3ì´ˆ ë’¤ ë©”ì¸í™”ë©´ìœ¼ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤.");
 			sleep(3000);
 		}
 	}
